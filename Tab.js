@@ -1,28 +1,20 @@
-'use strict';
-import React, {
-  PropTypes,
-} from 'react';
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  TouchableNativeFeedback,
-  Platform,
-  View,
-} from 'react-native';
+"use strict";
+import React from "react";
+import PropTypes from "prop-types";
+import { StyleSheet, Text, TouchableOpacity, TouchableNativeFeedback, Platform, View } from "react-native";
 
-import Layout from './Layout';
+import Layout from "./Layout";
 
 export default class Tab extends React.Component {
   static propTypes = {
-    testID : PropTypes.string,
+    testID: PropTypes.string,
     title: PropTypes.string,
     titleStyle: Text.propTypes.style,
     badge: PropTypes.element,
     onPress: PropTypes.func,
     hidesTabTouch: PropTypes.bool,
     allowFontScaling: PropTypes.bool,
-    style: View.propTypes.style,
+    style: View.propTypes.style
   };
 
   constructor(props, context) {
@@ -39,36 +31,23 @@ export default class Tab extends React.Component {
     }
 
     if (title) {
-      title =
-        <Text
-          numberOfLines={1}
-          allowFontScaling={!!this.props.allowFontScaling}
-          style={[styles.title, this.props.titleStyle]}>
+      title = (
+        <Text numberOfLines={1} allowFontScaling={!!this.props.allowFontScaling} style={[styles.title, this.props.titleStyle]}>
           {title}
-        </Text>;
+        </Text>
+      );
     }
 
     if (badge) {
       badge = React.cloneElement(badge, {
-        style: [styles.badge, badge.props.style],
+        style: [styles.badge, badge.props.style]
       });
     }
 
-    let tabStyle = [
-      styles.container,
-      title ? null : styles.untitledContainer,
-      this.props.style,
-    ];
-    if (
-      !this.props.hidesTabTouch &&
-      Platform.OS === 'android' &&
-      Platform.Version >= 21
-    ) {
+    let tabStyle = [styles.container, title ? null : styles.untitledContainer, this.props.style];
+    if (!this.props.hidesTabTouch && Platform.OS === "android" && Platform.Version >= 21) {
       return (
-        <TouchableNativeFeedback
-          testID={this.props.testID}
-          background={TouchableNativeFeedback.Ripple(undefined, true)}
-          onPress={this._handlePress}>
+        <TouchableNativeFeedback testID={this.props.testID} background={TouchableNativeFeedback.Ripple(undefined, true)} onPress={this._handlePress}>
           <View style={tabStyle}>
             <View>
               {icon}
@@ -80,11 +59,7 @@ export default class Tab extends React.Component {
       );
     }
     return (
-      <TouchableOpacity
-        testID={this.props.testID}
-        activeOpacity={this.props.hidesTabTouch ? 1.0 : 0.8}
-        onPress={this._handlePress}
-        style={tabStyle}>
+      <TouchableOpacity testID={this.props.testID} activeOpacity={this.props.hidesTabTouch ? 1.0 : 0.8} onPress={this._handlePress} style={tabStyle}>
         <View>
           {icon}
           {badge}
@@ -103,25 +78,25 @@ export default class Tab extends React.Component {
 
 let styles = StyleSheet.create({
   badge: {
-    position: 'absolute',
+    position: "absolute",
     top: -6,
-    right: -10,
+    right: -10
   },
   container: {
     flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
+    flexDirection: "column",
+    justifyContent: "flex-end",
+    alignItems: "center"
   },
   untitledContainer: {
-    paddingBottom: 13,
+    paddingBottom: 13
   },
   title: {
-    color: '#929292',
+    color: "#929292",
     fontSize: 10,
-    textAlign: 'center',
-    alignSelf: 'stretch',
+    textAlign: "center",
+    alignSelf: "stretch",
     marginTop: 4,
-    marginBottom: 1 + Layout.pixel,
-  },
+    marginBottom: 1 + Layout.pixel
+  }
 });
